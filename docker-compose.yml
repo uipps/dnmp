@@ -1,0 +1,183 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:${NGINX_VERSION}
+    ports:
+      - "${NGINX_HTTP_HOST_PORT}:80"
+      - "${NGINX_HTTPS_HOST_PORT}:443"
+      - "20180:20180"
+      - "20181:20181"
+      - "20182:20182"
+      - "20183:20183"
+      - "10001:10001"
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
+      - ${SOURCE_DIR_LARAVEL}:/var/www/html/laravel_dev/:rw
+      - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
+      - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
+      - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
+      - ${NGINX_CONFD_DIR}:/etc/nginx/conf.d/:rw
+      - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf:ro
+      - ${NGINX_LOG_DIR}:/var/log/nginx/:rw
+    restart: always
+    networks:
+      - default
+
+  php73:
+    build:
+      context: .
+      dockerfile: Dockerfile_php73
+      args:
+        PHP_VERSION: ${PHP73_VERSION}
+        PHP_XDEBUG: ${PHP73_XDEBUG}
+        PHP_SWOOLE: ${PHP73_SWOOLE}
+        PHP_REDIS: ${PHP73_REDIS}
+        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
+      - ${SOURCE_DIR_LARAVEL}:/var/www/html/laravel_dev/:rw
+      - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
+      - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
+      - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
+      - ${PHP73_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP73_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  php72:
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP72_VERSION}
+        PHP_XDEBUG: ${PHP72_XDEBUG}
+        PHP_SWOOLE: ${PHP72_SWOOLE}
+        PHP_REDIS: ${PHP72_REDIS}
+        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
+      - ${SOURCE_DIR_LARAVEL}:/var/www/html/laravel_dev/:rw
+      - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
+      - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
+      - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
+      - ${PHP72_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP72_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  php56:
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP56_VERSION}
+        PHP_XDEBUG: ${PHP56_XDEBUG}
+        PHP_SWOOLE: ${PHP56_SWOOLE}
+        PHP_REDIS: ${PHP56_REDIS}
+        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
+      - ${SOURCE_DIR_LARAVEL}:/var/www/html/laravel_dev/:rw
+      - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
+      - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
+      - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
+      - ${PHP56_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP56_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  php54:
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP54_VERSION}
+        PHP_XDEBUG: ${PHP54_XDEBUG}
+        PHP_SWOOLE: ${PHP54_SWOOLE}
+        PHP_REDIS: ${PHP54_REDIS}
+        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
+      - ${SOURCE_DIR_LARAVEL}:/var/www/html/laravel_dev/:rw
+      - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
+      - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
+      - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
+      - ${PHP54_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP54_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  mysql80:
+    image: mysql:${MYSQL80_VERSION}
+    ports:
+      - "${MYSQL80_HOST_PORT}:3306"
+    volumes:
+      - ${MYSQL80_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${MYSQL80_DATA_DIR}:/var/lib/mysql/:rw
+    restart: always
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL80_ROOT_PASSWORD}"
+
+  mysql57:
+    image: mysql:${MYSQL57_VERSION}
+    ports:
+      - "${MYSQL57_HOST_PORT}:3306"
+    volumes:
+      - ${MYSQL57_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${MYSQL57_DATA_DIR}:/var/lib/mysql/:rw
+    restart: always
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL57_ROOT_PASSWORD}"
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    ports:
+      - "${REDIS_HOST_PORT}:6379"
+    volumes:
+      - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
+    restart: always
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    networks:
+      - default
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "${PHPMYADMIN_HOST_PORT}:80"
+    networks:
+      - default
+    environment:
+      - PMA_HOST=mysql57
+      - PMA_PORT=3306
+
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin:latest
+    ports:
+      - "${REDISMYADMIN_HOST_PORT}:80"
+    networks:
+      - default
+    environment:
+      - REDIS_1_HOST=redis
+      - REDIS_1_PORT=6379
+
+networks:
+  default:

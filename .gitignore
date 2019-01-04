@@ -1,0 +1,9 @@
+.idea
+.svn
+.DS_Store
+.env
+www/*
+!www/localhost/
+/log
+/mysql57
+/mysql80
