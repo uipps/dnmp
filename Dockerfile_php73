@@ -27,6 +27,10 @@ RUN docker-php-ext-install $mc pcntl \
     && docker-php-ext-install $mc mbstring \
     && docker-php-ext-install $mc exif \
     && :\
+    && apt install -y libmemcached-dev zlib1g-dev \
+    && pecl install memcached \
+    && docker-php-ext-enable memcached \
+    && :\
     && docker-php-ext-install $mc bcmath \
     && docker-php-ext-install $mc calendar \
     && docker-php-ext-install $mc sockets \
