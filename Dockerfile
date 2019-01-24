@@ -111,7 +111,7 @@ RUN apt install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
 #    && docker-php-ext-enable imagick \
     && :\
     && apt install -y libmemcached-dev zlib1g-dev \
-    && pecl install memcached \
+    && pecl install memcached-2.2.0 \
     && docker-php-ext-enable memcached \
     && :\
     && docker-php-ext-install $mc exif
