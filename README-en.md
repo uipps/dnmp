@@ -21,7 +21,7 @@ Docker deploying Nginx MySQL PHP7/PHP5.6/PHP5.4 in one key, support full feature
 1. Install `git`, `docker` and `docker-compose`;
 2. Clone project:
     ```
-    $ git clone https://github.com/yeszao/dnmp.git
+    $ git clone https://github.com/uipps/dnmp.git
     ```
 3. Add current user to group `docker`：
     ```
