@@ -211,6 +211,20 @@ Redis连接信息如下：
 2. 增强MySQL数据库访问的安全策略
 3. 增强redis访问的安全策略
 
+## 9.常见问题
+1. 执行 `docker-compose.exe up` 时候报错：
+Get https://registry-1.docker.io/v2/library/nginx/manifests/1.15.8: unauthorized: incorrect username or password
+通常发生在windows的git命令窗口（需要执行`winpty docker login`），或改用windows的CMD，然后执行`docker logout` ,
+再执行`docker login` ,提示你输入用户名，记得输入用户ID（不是email哦），会提示Login Succeeded。
+```
+E:\develope\docker\dnmp>docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: myusername
+Password:
+Login Succeeded
+
+```
+再次执行 `docker-compose.exe up` 试试
 
 ## License
 MIT
