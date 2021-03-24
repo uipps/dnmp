@@ -1,11 +1,11 @@
-DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
+DNMP（Docker + Nginx + MySQL + PHP8/7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 
 **[[ENGLISH]](README-en.md)**
 
 DNMP项目特点：
 1. `100%`开源
 2. `100%`遵循Docker标准
-3. 支持**多版本PHP**共存，可任意切换（PHP5.4、PHP5.6、PHP7.2)
+3. 支持**多版本PHP**共存，可任意切换（PHP8.0、PHP5.6、php7.4)
 4. 支持绑定**任意多个域名**
 5. 支持**HTTPS和HTTP/2**
 6. **PHP源代码、MySQL数据、配置文件、日志文件**都可在Host中直接修改查看
@@ -81,24 +81,24 @@ DNMP项目特点：
 
 要修改端口、日志文件位置、以及是否替换source.list文件等，请修改.env文件，然后重新构建：
 ```bash
-$ docker-compose build php54    # 重建单个服务
+$ docker-compose build php80    # 重建单个服务
 $ docker-compose build          # 重建全部服务
 
 ```
 
 
 ## 3.切换PHP版本
-默认情况下，我们同时创建 **PHP5.4、PHP5.6和PHP7.2** 三个PHP版本的容器，
+默认情况下，我们同时创建 **PHP8.0、PHP5.6和php7.4** 三个PHP版本的容器，
 
 切换PHP仅需修改相应站点 Nginx 配置的`fastcgi_pass`选项，
 
-例如，示例的 [http://localhost](http://localhost) 用的是PHP5.4，Nginx 配置：
+例如，示例的 [http://localhost](http://localhost) 用的是PHP8.0，Nginx 配置：
 ```
-    fastcgi_pass   php54:9000;
+    fastcgi_pass   php80:9000;
 ```
-要改用PHP7.2，修改为：
+要改用php7.4，修改为：
 ```
-    fastcgi_pass   php72:9000;
+    fastcgi_pass   php74:9000;
 ```
 再 **重启 Nginx** 生效。
 ```bash
@@ -111,9 +111,9 @@ $ docker exec -it dnmp_nginx_1 nginx -s reload
 打开~/.bashrc，加上：
 ```bash
 alias dnginx='docker exec -it dnmp_nginx_1 /bin/sh'
-alias dphp72='docker exec -it dnmp_php72_1 /bin/bash'
+alias dphp74='docker exec -it dnmp_php74_1 /bin/bash'
 alias dphp56='docker exec -it dnmp_php56_1 /bin/bash'
-alias dphp54='docker exec -it dnmp_php54_1 /bin/bash'
+alias dphp80='docker exec -it dnmp_php80_1 /bin/bash'
 alias dmysql='docker exec -it dnmp_mysql_1 /bin/bash'
 alias dredis='docker exec -it dnmp_redis_1 /bin/sh'
 ```

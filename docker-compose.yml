@@ -22,16 +22,18 @@ services:
     networks:
       - default
 
-  php73:
+  php74:
     build:
       context: .
-      dockerfile: Dockerfile_php73
+      dockerfile: Dockerfile
       args:
-        PHP_VERSION: ${PHP73_VERSION}
-        PHP_XDEBUG: ${PHP73_XDEBUG}
-        PHP_SWOOLE: ${PHP73_SWOOLE}
-        PHP_REDIS: ${PHP73_REDIS}
-        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+        PHP_VERSION: php:${PHP74_VERSION}-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        PHP_EXTENSIONS: ${PHP74_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php_7_4
+    expose:
+      - 9501
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
@@ -39,33 +41,10 @@ services:
       - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
       - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
       - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
-      - ${PHP73_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
-      - ${PHP73_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    networks:
-      - default
-
-  php72:
-    build:
-      context: .
-      dockerfile: Dockerfile_php72
-      args:
-        PHP_VERSION: ${PHP72_VERSION}
-        PHP_XDEBUG: ${PHP72_XDEBUG}
-        PHP_SWOOLE: ${PHP72_SWOOLE}
-        PHP_REDIS: ${PHP72_REDIS}
-        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
-    volumes:
-      - ${SOURCE_DIR}:/var/www/html/:rw
-      - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
-      - ${SOURCE_DIR_LARAVEL}:/var/www/html/laravel_dev/:rw
-      - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
-      - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
-      - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
-      - ${PHP72_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
-      - ${PHP72_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP74_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP74_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP74_LOG_DIR}:/var/log/php
+      - ${DATA_DIR}/composer:/tmp/composer
     restart: always
     cap_add:
       - SYS_PTRACE
@@ -75,12 +54,12 @@ services:
   php56:
     build:
       context: .
+      dockerfile: Dockerfile
       args:
-        PHP_VERSION: ${PHP56_VERSION}
-        PHP_XDEBUG: ${PHP56_XDEBUG}
-        PHP_SWOOLE: ${PHP56_SWOOLE}
-        PHP_REDIS: ${PHP56_REDIS}
-        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+        PHP_VERSION: php:${PHP56_VERSION}-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        PHP_EXTENSIONS: ${PHP56_EXTENSIONS}
+        TZ: "$TZ"
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
@@ -90,21 +69,26 @@ services:
       - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
       - ${PHP56_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
       - ${PHP56_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP56_LOG_DIR}:/var/log/php
+      - ${DATA_DIR}/composer:/tmp/composer
     restart: always
     cap_add:
       - SYS_PTRACE
     networks:
       - default
 
-  php54:
+  php80:
     build:
       context: .
+      dockerfile: Dockerfile
       args:
-        PHP_VERSION: ${PHP54_VERSION}
-        PHP_XDEBUG: ${PHP54_XDEBUG}
-        PHP_SWOOLE: ${PHP54_SWOOLE}
-        PHP_REDIS: ${PHP54_REDIS}
-        REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+        PHP_VERSION: php:${PHP80_VERSION}-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php_8_0_3
+    expose:
+      - 9502
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
@@ -112,8 +96,10 @@ services:
       - ${SOURCE_DIR_DISPATCH}:/var/www/html/dispatch_dev/:rw
       - ${SOURCE_DIR_API}:/var/www/html/api_dev/:rw
       - ${SOURCE_DIR_WWW}:/var/www/html/www/:rw
-      - ${PHP54_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
-      - ${PHP54_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP80_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP80_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP80_LOG_DIR}:/var/log/php
+      - ${DATA_DIR}/composer:/tmp/composer
     restart: always
     cap_add:
       - SYS_PTRACE
