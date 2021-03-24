@@ -31,7 +31,7 @@ services:
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         PHP_EXTENSIONS: ${PHP74_EXTENSIONS}
         TZ: "$TZ"
-    container_name: php_7_4
+    container_name: php_7_4_16
     expose:
       - 9501
     volumes:
@@ -60,6 +60,7 @@ services:
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         PHP_EXTENSIONS: ${PHP56_EXTENSIONS}
         TZ: "$TZ"
+    container_name: php_5_6_40
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${SOURCE_DIR_LUMEN}:/var/www/html/lumen_dev/:rw
